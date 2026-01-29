@@ -1,0 +1,640 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --grab-green: #00A651;
+  --grab-dark-green: #004D40;
+  --flight-red: #D32F2F;
+  --esim-yellow: #F9A825;
+  --pass-green: #00A651;
+  --pay-teal: #006B5A;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --bg-card: #F5F5F5;
+  --white: #FFFFFF;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--white);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--white);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-icons svg {
+  color: var(--text-primary);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 100;
+}
+
+.close-btn,
+.share-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.close-btn:hover,
+.share-btn:hover {
+  background: var(--bg-card);
+}
+
+.sync-btn {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-card);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.sync-btn.visible {
+  display: flex;
+}
+
+.sync-btn svg {
+  color: var(--grab-green);
+}
+
+.sync-text {
+  color: var(--grab-green);
+  font-weight: 600;
+}
+
+/* Content */
+.content {
+  padding: 0 20px 40px;
+}
+
+/* Title Section */
+.title-section {
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Trip Summary Cards */
+.trip-summary {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.5s ease;
+}
+
+.trip-summary.visible {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.summary-card {
+  color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: -8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.summary-card:first-child {
+  margin-top: 0;
+}
+
+.summary-card.expanded {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.card-collapsed {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 12px;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-meta {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.card-expanded {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 20px;
+}
+
+.summary-card.expanded .card-expanded {
+  max-height: 200px;
+  padding: 0 20px 16px;
+}
+
+/* Flight Card */
+.flight-card {
+  background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
+  z-index: 4;
+}
+
+.flight-details {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flight-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flight-point {
+  text-align: center;
+}
+
+.flight-code {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.flight-time {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.flight-line {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.flight-line::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.plane-icon {
+  font-size: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.flight-duration {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+/* eSIM Card */
+.esim-card {
+  background: linear-gradient(135deg, #F9A825 0%, #F57F17 100%);
+  z-index: 3;
+}
+
+.esim-details {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.data-usage {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.usage-circle {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.usage-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 3;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.usage-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.usage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.usage-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.usage-status {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* Travel Pass Card */
+.pass-card {
+  background: linear-gradient(135deg, #00A651 0%, #00873F 100%);
+  z-index: 2;
+}
+
+.pass-details {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.savings-amount {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pass-validity {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.browse-vouchers {
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.browse-vouchers:hover {
+  text-decoration: underline;
+}
+
+/* GrabPay Card */
+.pay-card {
+  background: linear-gradient(135deg, #006B5A 0%, #004D40 100%);
+  z-index: 1;
+}
+
+.pay-details {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pay-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pay-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pay-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pay-action svg {
+  width: 24px;
+  height: 24px;
+}
+
+.pay-action span {
+  font-size: 11px;
+}
+
+/* Pre-sync Feature Cards */
+.prep-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prep-section.synced .feature-card:not(#advanceBookingCard) {
+  display: none;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-content {
+  flex: 1;
+}
+
+.feature-content h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.feature-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-outline,
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--grab-green);
+  color: var(--grab-green);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 166, 81, 0.1);
+}
+
+.btn-primary {
+  background: var(--grab-dark-green);
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #003D30;
+}
+
+/* Other Essentials */
+.essentials-section {
+  padding-top: 8px;
+}
+
+.essentials-section h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.essentials-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.essentials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.essential-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.essential-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.essential-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.helloride-badge {
+  background: #FFEB3B;
+  color: #FF5722;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.essential-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.essential-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.essential-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardStack {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.summary-card.animate-in {
+  animation: cardStack 0.4s ease forwards;
+}
+
+.summary-card:nth-child(1).animate-in { animation-delay: 0s; }
+.summary-card:nth-child(2).animate-in { animation-delay: 0.1s; }
+.summary-card:nth-child(3).animate-in { animation-delay: 0.2s; }
+.summary-card:nth-child(4).animate-in { animation-delay: 0.3s; }
+
+/* Responsive */
+@media (max-width: 375px) {
+  .title {
+    font-size: 24px;
+  }
+  
+  .feature-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .pay-actions {
+    flex-wrap: wrap;
+  }
+  
+  .pay-action {
+    flex: 1 1 45%;
+  }
+}

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Trip to Bangkok | Grab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00A651">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+  <div class="app">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="status-icons">
+        <svg class="signal" width="17" height="11" viewBox="0 0 17 11" fill="none">
+          <rect x="0" y="7" width="3" height="4" rx="0.5" fill="currentColor"/>
+          <rect x="4.5" y="5" width="3" height="6" rx="0.5" fill="currentColor"/>
+          <rect x="9" y="2" width="3" height="9" rx="0.5" fill="currentColor"/>
+          <rect x="13.5" y="0" width="3" height="11" rx="0.5" fill="currentColor"/>
+        </svg>
+        <svg class="wifi" width="15" height="11" viewBox="0 0 15 11" fill="none">
+          <path d="M7.5 11a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"/>
+          <path d="M4.5 7a4.5 4.5 0 016 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M2 4a8 8 0 0111 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <svg class="battery" width="25" height="12" viewBox="0 0 25 12" fill="none">
+          <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor"/>
+          <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor"/>
+          <path d="M23 4v4a2 2 0 000-4z" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <button class="close-btn" onclick="window.close()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <button class="sync-btn" id="syncIndicator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>31</span>
+        <span class="sync-text">Sync on</span>
+      </button>
+      <button class="share-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Title Section -->
+      <div class="title-section">
+        <p class="subtitle">Trip to Bangkok</p>
+        <h1 class="title">Prepare for your trip</h1>
+      </div>
+
+      <!-- Trip Summary Cards (Hidden initially) -->
+      <div class="trip-summary" id="tripSummary">
+        <!-- Flight Card -->
+        <div class="summary-card flight-card" id="flightCard" onclick="toggleCard('flight')">
+          <div class="card-collapsed">
+            <div class="card-icon">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/AirAsia_New_Logo.svg/512px-AirAsia_New_Logo.svg.png" alt="AirAsia" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>'">
+            </div>
+            <div class="card-info">
+              <span class="card-title">AirAsia AK1234</span>
+            </div>
+            <span class="card-meta">12th Aug</span>
+          </div>
+          <div class="card-expanded">
+            <div class="flight-details">
+              <div class="flight-route">
+                <div class="flight-point">
+                  <span class="flight-code">SIN</span>
+                  <span class="flight-time">06:40 PM</span>
+                </div>
+                <div class="flight-line">
+                  <div class="plane-icon">✈️</div>
+                  <span class="flight-duration">2h 24m</span>
+                </div>
+                <div class="flight-point">
+                  <span class="flight-code">KUL</span>
+                  <span class="flight-time">09:04 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- eSIM Card -->
+        <div class="summary-card esim-card" id="esimCard" onclick="toggleCard('esim')">
+          <div class="card-collapsed">
+            <div class="card-icon esim-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="white" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <span class="card-title">Firsty Unlimited 5GB</span>
+            </div>
+            <span class="card-meta">Malaysia Esim</span>
+          </div>
+          <div class="card-expanded">
+            <div class="esim-details">
+              <div class="data-usage">
+                <div class="usage-circle">
+                  <svg viewBox="0 0 36 36">
+                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                    <path class="circle-progress" stroke-dasharray="45, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  </svg>
+                  <span class="usage-text">45%</span>
+                </div>
+                <div class="usage-info">
+                  <span class="usage-value">2.23 GBs utilized</span>
+                  <span class="usage-status">✓ ESim installed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel Pass Card -->
+        <div class="summary-card pass-card" id="passCard" onclick="toggleCard('pass')">
+          <div class="card-collapsed">
+            <div class="card-icon pass-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <span class="card-title">Grab Travel pass</span>
+            </div>
+            <span class="card-meta">Malaysia</span>
+          </div>
+          <div class="card-expanded">
+            <div class="pass-details">
+              <div class="savings-amount">S$ 12.03 saved</div>
+              <div class="pass-validity">Until 30 June 2024</div>
+              <a href="#" class="browse-vouchers">Browse vouchers →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GrabPay Card -->
+        <div class="summary-card pay-card" id="payCard" onclick="toggleCard('pay')">
+          <div class="card-collapsed">
+            <div class="card-icon pay-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="5" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
+                <line x1="2" y1="10" x2="22" y2="10" stroke="white" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <span class="card-title">GrabPay like a local</span>
+            </div>
+            <span class="card-meta">MasterCard 8263</span>
+          </div>
+          <div class="card-expanded">
+            <div class="pay-details">
+              <div class="pay-actions">
+                <button class="pay-action">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"/>
+                  </svg>
+                  <span>Scan</span>
+                </button>
+                <button class="pay-action">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 4H3a2 2 0 00-2 2v12a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2z"/>
+                    <line x1="1" y1="10" x2="23" y2="10"/>
+                  </svg>
+                  <span>Balance</span>
+                </button>
+                <button class="pay-action">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <polyline points="19,12 12,19 5,12"/>
+                  </svg>
+                  <span>Deposit</span>
+                </button>
+                <button class="pay-action">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  <span>Add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-sync Section -->
+      <div class="prep-section" id="prepSection">
+        <!-- Grab Travel Pass Card -->
+        <div class="feature-card" id="travelPassCard">
+          <div class="feature-icon travel-pass-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="8" width="40" height="32" rx="4" fill="#E8A56C"/>
+              <rect x="8" y="14" width="16" height="10" rx="2" fill="#FFD700"/>
+              <rect x="8" y="28" width="32" height="4" rx="1" fill="#F5E6D3"/>
+              <circle cx="38" cy="14" r="4" fill="#FF6B9D"/>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h3>Grab Travel Pass</h3>
+            <p>Save on rides and meals during your trip, a must-have for travel!</p>
+            <div class="feature-buttons">
+              <button class="btn-outline">Learn more</button>
+              <button class="btn-primary">Buy now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advance Booking Card -->
+        <div class="feature-card" id="advanceBookingCard">
+          <div class="feature-icon booking-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <ellipse cx="24" cy="36" rx="16" ry="4" fill="#E0E0E0"/>
+              <rect x="8" y="24" width="32" height="12" rx="4" fill="#00A651"/>
+              <rect x="12" y="20" width="24" height="8" fill="#00A651"/>
+              <circle cx="14" cy="36" r="4" fill="#333"/>
+              <circle cx="34" cy="36" r="4" fill="#333"/>
+              <circle cx="14" cy="36" r="2" fill="#666"/>
+              <circle cx="34" cy="36" r="2" fill="#666"/>
+              <path d="M24 4l-4 12h8l-4-12z" fill="#FF5252"/>
+              <circle cx="24" cy="4" r="3" fill="#FF5252"/>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h3>Advance Booking</h3>
+            <p>The driver will be there when your flight lands.</p>
+            <div class="feature-buttons">
+              <button class="btn-outline">Learn more</button>
+              <button class="btn-primary">Schedule</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sync Travel Plans Card -->
+        <div class="feature-card" id="syncCard">
+          <div class="feature-icon sync-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="4" width="28" height="36" rx="4" fill="#4CAF50"/>
+              <rect x="8" y="8" width="20" height="8" fill="#81C784"/>
+              <text x="12" y="32" font-size="14" fill="white" font-weight="bold">31</text>
+              <rect x="20" y="20" width="24" height="24" rx="4" fill="#2196F3"/>
+              <path d="M32 28l-6 6 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="40" cy="16" r="6" fill="#FF9800"/>
+              <path d="M38 16h4M40 14v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h3>Sync your travel plans</h3>
+            <p>Get all your bookings in a single place for effortless travel!</p>
+            <div class="feature-buttons">
+              <button class="btn-outline">Learn more</button>
+              <button class="btn-primary" onclick="syncTrip()">Sync</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Essentials Section -->
+      <div class="essentials-section">
+        <h2>Other essentials</h2>
+        <p class="essentials-subtitle">Available in Grab, no extra downloads</p>
+        
+        <div class="essentials-grid">
+          <div class="essential-card">
+            <div class="essential-icon firsty-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="14" fill="#FF5722"/>
+                <circle cx="16" cy="16" r="10" stroke="white" stroke-width="2"/>
+                <path d="M4 16h24M16 4c3 4 3 20 0 24M16 4c-3 4-3 20 0 24" stroke="white" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="essential-info">
+              <span class="essential-name">Firsty</span>
+              <span class="essential-desc">1 SIM for Fast Global Internet</span>
+            </div>
+          </div>
+
+          <div class="essential-card">
+            <div class="essential-icon helloride-icon">
+              <div class="helloride-badge">Hello Ride</div>
+            </div>
+            <div class="essential-info">
+              <span class="essential-name">HelloRide</span>
+              <span class="essential-desc">Bike around Marina Bay, effortlessly</span>
+            </div>
+          </div>
+
+          <div class="essential-card">
+            <div class="essential-icon redbus-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="6" fill="#D32F2F"/>
+                <rect x="6" y="10" width="20" height="12" rx="2" fill="white"/>
+                <rect x="8" y="12" width="4" height="4" fill="#D32F2F"/>
+                <rect x="14" y="12" width="4" height="4" fill="#D32F2F"/>
+                <rect x="20" y="12" width="4" height="4" fill="#D32F2F"/>
+                <circle cx="10" cy="24" r="2" fill="white"/>
+                <circle cx="22" cy="24" r="2" fill="white"/>
+              </svg>
+            </div>
+            <div class="essential-info">
+              <span class="essential-name">redBus</span>
+              <span class="essential-desc">Book bus tickets across Asia</span>
+            </div>
+          </div>
+
+          <div class="essential-card">
+            <div class="essential-icon helloride-alt-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="6" fill="#00897B"/>
+                <path d="M8 16c0-4 4-8 8-8s8 4 8 8-4 8-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M24 16c0 4-4 8-8 8s-8-4-8-8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="essential-info">
+              <span class="essential-name">HelloRide</span>
+              <span class="essential-desc">Bike around Marina Bay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
