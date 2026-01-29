@@ -41,24 +41,28 @@
 
     <!-- Header -->
     <div class="header">
-      <button class="close-btn" onclick="window.close()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
+      <button class="icon-btn close-btn" onclick="window.close()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="13" y1="1" x2="1" y2="13"></line>
+          <line x1="1" y1="1" x2="13" y2="13"></line>
         </svg>
       </button>
-      <button class="sync-btn" id="syncIndicator">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8" y1="2" x2="8" y2="6"></line>
-          <line x1="3" y1="10" x2="21" y2="10"></line>
-        </svg>
-        <span>31</span>
-        <span class="sync-text">Sync on</span>
+      
+      <button class="sync-indicator" id="syncIndicator">
+        <div class="calendar-icon">
+          <div class="cal-top">
+            <span class="cal-red"></span>
+            <span class="cal-yellow"></span>
+            <span class="cal-green"></span>
+            <span class="cal-blue"></span>
+          </div>
+          <div class="cal-body">31</div>
+        </div>
+        <span>Sync on</span>
       </button>
-      <button class="share-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      
+      <button class="icon-btn share-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="18" cy="5" r="3"></circle>
           <circle cx="6" cy="12" r="3"></circle>
           <circle cx="18" cy="19" r="3"></circle>
@@ -76,228 +80,276 @@
         <h1 class="title">Prepare for your trip</h1>
       </div>
 
-      <!-- Trip Summary Cards (Hidden initially) -->
-      <div class="trip-summary" id="tripSummary">
-        <!-- Flight Card -->
-        <div class="summary-card flight-card" id="flightCard" onclick="toggleCard('flight')">
-          <div class="card-collapsed">
-            <div class="card-icon">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/AirAsia_New_Logo.svg/512px-AirAsia_New_Logo.svg.png" alt="AirAsia" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>'">
+      <!-- Trip Summary Cards (Hidden initially, shown after sync) -->
+      <div class="trip-cards" id="tripCards">
+        <!-- AirAsia Flight Card -->
+        <div class="trip-card flight-card" id="flightCard" onclick="toggleCard('flight')">
+          <div class="card-header">
+            <div class="card-logo airasia-logo">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <circle cx="20" cy="20" r="18" fill="none" stroke="white" stroke-width="2"/>
+                <text x="20" y="24" text-anchor="middle" fill="white" font-size="8" font-weight="bold">AirAsia</text>
+              </svg>
             </div>
-            <div class="card-info">
-              <span class="card-title">AirAsia AK1234</span>
-            </div>
-            <span class="card-meta">12th Aug</span>
+            <div class="card-title">AirAsia AK1234</div>
+            <div class="card-meta">12th Aug</div>
           </div>
-          <div class="card-expanded">
-            <div class="flight-details">
-              <div class="flight-route">
-                <div class="flight-point">
-                  <span class="flight-code">SIN</span>
-                  <span class="flight-time">06:40 PM</span>
-                </div>
-                <div class="flight-line">
-                  <div class="plane-icon">✈️</div>
-                  <span class="flight-duration">2h 24m</span>
-                </div>
-                <div class="flight-point">
-                  <span class="flight-code">KUL</span>
-                  <span class="flight-time">09:04 PM</span>
-                </div>
+          <div class="card-content" id="flightContent">
+            <div class="flight-route">
+              <div class="route-point">
+                <span class="airport-code">SIN</span>
+                <span class="flight-time">06:40 PM</span>
+              </div>
+              <div class="route-line">
+                <span class="plane">✈</span>
+                <div class="line"></div>
+                <span class="duration">2h 24m</span>
+              </div>
+              <div class="route-point">
+                <span class="airport-code">KUL</span>
+                <span class="flight-time">09:04 PM</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- eSIM Card -->
-        <div class="summary-card esim-card" id="esimCard" onclick="toggleCard('esim')">
-          <div class="card-collapsed">
-            <div class="card-icon esim-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
-                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="white" stroke-width="2"/>
+        <!-- Firsty eSIM Card -->
+        <div class="trip-card esim-card" id="esimCard" onclick="toggleCard('esim')">
+          <div class="card-header">
+            <div class="card-logo esim-logo">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <circle cx="20" cy="20" r="16" fill="none" stroke="white" stroke-width="2"/>
+                <line x1="4" y1="20" x2="36" y2="20" stroke="white" stroke-width="1.5"/>
+                <path d="M20 4 Q28 12 28 20 Q28 28 20 36" fill="none" stroke="white" stroke-width="1.5"/>
+                <path d="M20 4 Q12 12 12 20 Q12 28 20 36" fill="none" stroke="white" stroke-width="1.5"/>
               </svg>
             </div>
-            <div class="card-info">
-              <span class="card-title">Firsty Unlimited 5GB</span>
-            </div>
-            <span class="card-meta">Malaysia Esim</span>
+            <div class="card-title">Firsty Unlimited 5GB</div>
+            <div class="card-meta">Malaysia Esim</div>
           </div>
-          <div class="card-expanded">
-            <div class="esim-details">
-              <div class="data-usage">
-                <div class="usage-circle">
-                  <svg viewBox="0 0 36 36">
-                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                    <path class="circle-progress" stroke-dasharray="45, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                  </svg>
-                  <span class="usage-text">45%</span>
-                </div>
-                <div class="usage-info">
-                  <span class="usage-value">2.23 GBs utilized</span>
-                  <span class="usage-status">✓ ESim installed</span>
-                </div>
+          <div class="card-content" id="esimContent">
+            <div class="esim-usage">
+              <div class="usage-ring">
+                <svg viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="6"/>
+                  <circle cx="30" cy="30" r="26" fill="none" stroke="white" stroke-width="6" 
+                    stroke-dasharray="65 163" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+                </svg>
+                <span class="usage-percent">40%</span>
+              </div>
+              <div class="usage-details">
+                <span class="usage-value">2.23 GBs utilized</span>
+                <span class="usage-status">✓ ESim installed</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Travel Pass Card -->
-        <div class="summary-card pass-card" id="passCard" onclick="toggleCard('pass')">
-          <div class="card-collapsed">
-            <div class="card-icon pass-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Grab Travel Pass Card -->
+        <div class="trip-card pass-card" id="passCard" onclick="toggleCard('pass')">
+          <div class="card-header">
+            <div class="card-logo pass-logo">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <rect x="8" y="10" width="24" height="20" rx="3" fill="none" stroke="white" stroke-width="2"/>
+                <path d="M12 16h16M12 20h12M12 24h8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
-            <div class="card-info">
-              <span class="card-title">Grab Travel pass</span>
-            </div>
-            <span class="card-meta">Malaysia</span>
+            <div class="card-title">Grab Travel pass</div>
+            <div class="card-meta">Malaysia</div>
           </div>
-          <div class="card-expanded">
-            <div class="pass-details">
-              <div class="savings-amount">S$ 12.03 saved</div>
-              <div class="pass-validity">Until 30 June 2024</div>
-              <a href="#" class="browse-vouchers">Browse vouchers →</a>
+          <div class="card-content" id="passContent">
+            <div class="pass-savings">
+              <span class="savings-amount">S$ 12.03 saved</span>
+              <span class="savings-validity">Until 30 June 2024</span>
+              <a href="#" class="browse-link">Browse vouchers</a>
             </div>
           </div>
         </div>
 
         <!-- GrabPay Card -->
-        <div class="summary-card pay-card" id="payCard" onclick="toggleCard('pay')">
-          <div class="card-collapsed">
-            <div class="card-icon pay-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="5" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
-                <line x1="2" y1="10" x2="22" y2="10" stroke="white" stroke-width="2"/>
+        <div class="trip-card pay-card" id="payCard" onclick="toggleCard('pay')">
+          <div class="card-header">
+            <div class="card-logo pay-logo">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <rect x="6" y="12" width="28" height="18" rx="3" fill="none" stroke="white" stroke-width="2"/>
+                <line x1="6" y1="18" x2="34" y2="18" stroke="white" stroke-width="2"/>
+                <rect x="10" y="22" width="8" height="4" rx="1" fill="white"/>
               </svg>
             </div>
-            <div class="card-info">
-              <span class="card-title">GrabPay like a local</span>
-            </div>
-            <span class="card-meta">MasterCard 8263</span>
+            <div class="card-title">GrabPay like a local</div>
+            <div class="card-meta">MasterCard 8263</div>
           </div>
-          <div class="card-expanded">
-            <div class="pay-details">
-              <div class="pay-actions">
-                <button class="pay-action">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"/>
-                  </svg>
-                  <span>Scan</span>
-                </button>
-                <button class="pay-action">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 4H3a2 2 0 00-2 2v12a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2z"/>
-                    <line x1="1" y1="10" x2="23" y2="10"/>
-                  </svg>
-                  <span>Balance</span>
-                </button>
-                <button class="pay-action">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="5" x2="12" y2="19"/>
-                    <polyline points="19,12 12,19 5,12"/>
-                  </svg>
-                  <span>Deposit</span>
-                </button>
-                <button class="pay-action">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="5" x2="12" y2="19"/>
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                  </svg>
-                  <span>Add</span>
-                </button>
-              </div>
+          <div class="card-content" id="payContent">
+            <div class="pay-actions">
+              <button class="pay-action">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="7" height="7"/>
+                  <rect x="14" y="3" width="7" height="7"/>
+                  <rect x="14" y="14" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <span>Scan</span>
+              </button>
+              <button class="pay-action">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+                <span>Balance</span>
+              </button>
+              <button class="pay-action">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="5,12 12,19 19,12"/>
+                </svg>
+                <span>Deposit</span>
+              </button>
+              <button class="pay-action">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Add</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Pre-sync Section -->
-      <div class="prep-section" id="prepSection">
-        <!-- Grab Travel Pass Card -->
-        <div class="feature-card" id="travelPassCard">
-          <div class="feature-icon travel-pass-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="8" width="40" height="32" rx="4" fill="#E8A56C"/>
-              <rect x="8" y="14" width="16" height="10" rx="2" fill="#FFD700"/>
-              <rect x="8" y="28" width="32" height="4" rx="1" fill="#F5E6D3"/>
-              <circle cx="38" cy="14" r="4" fill="#FF6B9D"/>
+      <!-- Feature Cards (Pre-sync state) -->
+      <div class="feature-cards" id="featureCards">
+        <!-- Grab Travel Pass -->
+        <div class="feature-card" id="travelPassFeature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <!-- Passport/wallet -->
+              <rect x="12" y="16" width="40" height="36" rx="4" fill="#C4956A"/>
+              <rect x="16" y="20" width="14" height="10" rx="2" fill="#FFD93D"/>
+              <rect x="16" y="34" width="32" height="3" rx="1" fill="#F5E6D3"/>
+              <rect x="16" y="40" width="24" height="3" rx="1" fill="#F5E6D3"/>
+              <!-- Globe decoration -->
+              <circle cx="44" cy="22" r="8" fill="#4ECDC4"/>
+              <path d="M40 22h8M44 18v8" stroke="white" stroke-width="1"/>
+              <!-- Discount tag -->
+              <circle cx="48" cy="14" r="6" fill="#FF6B6B"/>
+              <text x="48" y="17" text-anchor="middle" fill="white" font-size="8" font-weight="bold">%</text>
             </svg>
           </div>
           <div class="feature-content">
             <h3>Grab Travel Pass</h3>
             <p>Save on rides and meals during your trip, a must-have for travel!</p>
             <div class="feature-buttons">
-              <button class="btn-outline">Learn more</button>
+              <button class="btn-secondary">Learn more</button>
               <button class="btn-primary">Buy now</button>
             </div>
           </div>
         </div>
 
-        <!-- Advance Booking Card -->
-        <div class="feature-card" id="advanceBookingCard">
-          <div class="feature-icon booking-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <ellipse cx="24" cy="36" rx="16" ry="4" fill="#E0E0E0"/>
-              <rect x="8" y="24" width="32" height="12" rx="4" fill="#00A651"/>
-              <rect x="12" y="20" width="24" height="8" fill="#00A651"/>
-              <circle cx="14" cy="36" r="4" fill="#333"/>
-              <circle cx="34" cy="36" r="4" fill="#333"/>
-              <circle cx="14" cy="36" r="2" fill="#666"/>
-              <circle cx="34" cy="36" r="2" fill="#666"/>
-              <path d="M24 4l-4 12h8l-4-12z" fill="#FF5252"/>
-              <circle cx="24" cy="4" r="3" fill="#FF5252"/>
+        <!-- Advance Booking -->
+        <div class="feature-card" id="advanceBookingFeature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <!-- Car -->
+              <ellipse cx="32" cy="50" rx="20" ry="4" fill="#E0E0E0"/>
+              <rect x="14" y="36" width="36" height="14" rx="4" fill="#2D2D2D"/>
+              <rect x="18" y="32" width="28" height="8" rx="2" fill="#2D2D2D"/>
+              <rect x="20" y="34" width="8" height="4" rx="1" fill="#87CEEB"/>
+              <rect x="36" y="34" width="8" height="4" rx="1" fill="#87CEEB"/>
+              <circle cx="22" cy="50" r="4" fill="#333"/>
+              <circle cx="22" cy="50" r="2" fill="#666"/>
+              <circle cx="42" cy="50" r="4" fill="#333"/>
+              <circle cx="42" cy="50" r="2" fill="#666"/>
+              <!-- Calendar with checkmark -->
+              <rect x="36" y="8" width="20" height="18" rx="3" fill="white" stroke="#00A651" stroke-width="2"/>
+              <rect x="36" y="8" width="20" height="6" rx="3" fill="#00A651"/>
+              <polyline points="42,18 45,21 50,14" fill="none" stroke="#00A651" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="feature-content">
             <h3>Advance Booking</h3>
             <p>The driver will be there when your flight lands.</p>
             <div class="feature-buttons">
-              <button class="btn-outline">Learn more</button>
+              <button class="btn-secondary">Learn more</button>
               <button class="btn-primary">Schedule</button>
             </div>
           </div>
         </div>
 
-        <!-- Sync Travel Plans Card -->
-        <div class="feature-card" id="syncCard">
-          <div class="feature-icon sync-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="4" width="28" height="36" rx="4" fill="#4CAF50"/>
-              <rect x="8" y="8" width="20" height="8" fill="#81C784"/>
-              <text x="12" y="32" font-size="14" fill="white" font-weight="bold">31</text>
-              <rect x="20" y="20" width="24" height="24" rx="4" fill="#2196F3"/>
-              <path d="M32 28l-6 6 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="40" cy="16" r="6" fill="#FF9800"/>
-              <path d="M38 16h4M40 14v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <!-- Sync Travel Plans -->
+        <div class="feature-card" id="syncFeature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <!-- Boarding pass -->
+              <rect x="8" y="16" width="32" height="40" rx="4" fill="#FFD93D"/>
+              <rect x="12" y="22" width="24" height="12" rx="2" fill="white"/>
+              <rect x="12" y="38" width="16" height="3" rx="1" fill="white" opacity="0.7"/>
+              <rect x="12" y="44" width="20" height="3" rx="1" fill="white" opacity="0.7"/>
+              <!-- Calendar -->
+              <rect x="32" y="8" width="24" height="24" rx="4" fill="white" stroke="#E0E0E0" stroke-width="2"/>
+              <rect x="32" y="8" width="24" height="8" rx="4" fill="#FF5252"/>
+              <text x="44" y="26" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">31</text>
+              <!-- Plane -->
+              <circle cx="52" cy="44" r="10" fill="#2196F3"/>
+              <path d="M48 44h8M52 40v8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <text x="52" y="47" text-anchor="middle" fill="white" font-size="10">✈</text>
             </svg>
           </div>
           <div class="feature-content">
             <h3>Sync your travel plans</h3>
             <p>Get all your bookings in a single place for effortless travel!</p>
             <div class="feature-buttons">
-              <button class="btn-outline">Learn more</button>
-              <button class="btn-primary" onclick="syncTrip()">Sync</button>
+              <button class="btn-secondary">Learn more</button>
+              <button class="btn-primary" onclick="syncTrip(event)">Sync</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Other Essentials Section -->
+      <!-- Advance Booking (Always visible after sync) -->
+      <div class="advance-booking-section" id="advanceBookingSection">
+        <h2 class="section-title">Prepare for your trip</h2>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <ellipse cx="32" cy="50" rx="20" ry="4" fill="#E0E0E0"/>
+              <rect x="14" y="36" width="36" height="14" rx="4" fill="#2D2D2D"/>
+              <rect x="18" y="32" width="28" height="8" rx="2" fill="#2D2D2D"/>
+              <rect x="20" y="34" width="8" height="4" rx="1" fill="#87CEEB"/>
+              <rect x="36" y="34" width="8" height="4" rx="1" fill="#87CEEB"/>
+              <circle cx="22" cy="50" r="4" fill="#333"/>
+              <circle cx="22" cy="50" r="2" fill="#666"/>
+              <circle cx="42" cy="50" r="4" fill="#333"/>
+              <circle cx="42" cy="50" r="2" fill="#666"/>
+              <rect x="36" y="8" width="20" height="18" rx="3" fill="white" stroke="#00A651" stroke-width="2"/>
+              <rect x="36" y="8" width="20" height="6" rx="3" fill="#00A651"/>
+              <polyline points="42,18 45,21 50,14" fill="none" stroke="#00A651" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h3>Advance Booking</h3>
+            <p>The driver will be there when your flight lands.</p>
+            <div class="feature-buttons">
+              <button class="btn-secondary">Learn more</button>
+              <button class="btn-primary">Schedule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Essentials -->
       <div class="essentials-section">
-        <h2>Other essentials</h2>
-        <p class="essentials-subtitle">Available in Grab, no extra downloads</p>
+        <h2 class="section-title">Other essentials</h2>
+        <p class="section-subtitle">Available in Grab, no extra downloads</p>
         
         <div class="essentials-grid">
           <div class="essential-card">
-            <div class="essential-icon firsty-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="14" fill="#FF5722"/>
-                <circle cx="16" cy="16" r="10" stroke="white" stroke-width="2"/>
-                <path d="M4 16h24M16 4c3 4 3 20 0 24M16 4c-3 4-3 20 0 24" stroke="white" stroke-width="1.5"/>
+            <div class="essential-icon firsty">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <rect width="32" height="32" rx="8" fill="#C5E063"/>
+                <circle cx="16" cy="16" r="10" fill="none" stroke="#6B5B95" stroke-width="2"/>
+                <line x1="6" y1="16" x2="26" y2="16" stroke="#6B5B95" stroke-width="1.5"/>
+                <path d="M16 6 Q22 11 22 16 Q22 21 16 26" fill="none" stroke="#6B5B95" stroke-width="1.5"/>
+                <path d="M16 6 Q10 11 10 16 Q10 21 16 26" fill="none" stroke="#6B5B95" stroke-width="1.5"/>
               </svg>
             </div>
             <div class="essential-info">
@@ -307,8 +359,11 @@
           </div>
 
           <div class="essential-card">
-            <div class="essential-icon helloride-icon">
-              <div class="helloride-badge">Hello Ride</div>
+            <div class="essential-icon helloride">
+              <div class="helloride-badge">
+                <span class="hello">Hello</span>
+                <span class="ride">Ride</span>
+              </div>
             </div>
             <div class="essential-info">
               <span class="essential-name">HelloRide</span>
@@ -317,9 +372,9 @@
           </div>
 
           <div class="essential-card">
-            <div class="essential-icon redbus-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect width="32" height="32" rx="6" fill="#D32F2F"/>
+            <div class="essential-icon redbus">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <rect width="32" height="32" rx="8" fill="#D32F2F"/>
                 <rect x="6" y="10" width="20" height="12" rx="2" fill="white"/>
                 <rect x="8" y="12" width="4" height="4" fill="#D32F2F"/>
                 <rect x="14" y="12" width="4" height="4" fill="#D32F2F"/>
@@ -335,11 +390,11 @@
           </div>
 
           <div class="essential-card">
-            <div class="essential-icon helloride-alt-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect width="32" height="32" rx="6" fill="#00897B"/>
-                <path d="M8 16c0-4 4-8 8-8s8 4 8 8-4 8-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M24 16c0 4-4 8-8 8s-8-4-8-8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <div class="essential-icon helloride-alt">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <rect width="32" height="32" rx="8" fill="#00897B"/>
+                <path d="M8 16c0-4 4-8 8-8s8 4 8 8-4 8-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <path d="M24 16c0 4-4 8-8 8s-8-4-8-8" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
               </svg>
             </div>
             <div class="essential-info">

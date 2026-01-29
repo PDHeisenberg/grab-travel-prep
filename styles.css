@@ -6,25 +6,26 @@
 }
 
 :root {
-  --grab-green: #00A651;
-  --grab-dark-green: #004D40;
-  --flight-red: #D32F2F;
-  --esim-yellow: #F9A825;
+  --grab-green: #00B14F;
+  --grab-dark: #00573F;
+  --flight-red: #E31837;
+  --esim-lime: #C4D600;
   --pass-green: #00A651;
-  --pay-teal: #006B5A;
+  --pay-teal: #4FD1C5;
   --text-primary: #1A1A1A;
   --text-secondary: #666666;
   --bg-card: #F5F5F5;
+  --bg-button: #EFEFEF;
   --white: #FFFFFF;
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   background: var(--white);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
@@ -41,7 +42,11 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 12px 24px 8px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.time {
   font-weight: 600;
 }
 
@@ -60,54 +65,90 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 20px;
   position: sticky;
   top: 0;
   background: var(--white);
   z-index: 100;
 }
 
-.close-btn,
-.share-btn {
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  color: var(--text-primary);
+.icon-btn {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  background: var(--bg-button);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: background 0.2s;
 }
 
-.close-btn:hover,
-.share-btn:hover {
-  background: var(--bg-card);
+.icon-btn:hover {
+  background: #E5E5E5;
 }
 
-.sync-btn {
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+.icon-btn svg {
+  color: var(--text-primary);
+}
+
+/* Sync Indicator */
+.sync-indicator {
   display: none;
   align-items: center;
-  gap: 4px;
-  background: var(--bg-card);
+  gap: 8px;
+  background: var(--bg-button);
   border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 8px 16px 8px 10px;
+  border-radius: 24px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  color: var(--text-primary);
 }
 
-.sync-btn.visible {
+.sync-indicator.visible {
   display: flex;
 }
 
-.sync-btn svg {
-  color: var(--grab-green);
+.calendar-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-.sync-text {
-  color: var(--grab-green);
-  font-weight: 600;
+.cal-top {
+  display: flex;
+  height: 8px;
+}
+
+.cal-top span {
+  flex: 1;
+}
+
+.cal-red { background: #EA4335; }
+.cal-yellow { background: #FBBC05; }
+.cal-green { background: #34A853; }
+.cal-blue { background: #4285F4; }
+
+.cal-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 /* Content */
@@ -117,86 +158,73 @@ body {
 
 /* Title Section */
 .title-section {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .subtitle {
   font-size: 14px;
   color: var(--text-secondary);
   margin-bottom: 4px;
+  font-weight: 400;
 }
 
 .title {
   font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
+  color: var(--text-primary);
 }
 
-/* Trip Summary Cards */
-.trip-summary {
+/* Trip Cards (Synced State) */
+.trip-cards {
   display: none;
   flex-direction: column;
-  gap: 0;
   margin-bottom: 24px;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.5s ease;
+  position: relative;
 }
 
-.trip-summary.visible {
+.trip-cards.visible {
   display: flex;
-  opacity: 1;
-  transform: translateY(0);
 }
 
-.summary-card {
-  color: white;
+.trip-card {
   border-radius: 16px;
-  overflow: hidden;
+  color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: -8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
 }
 
-.summary-card:first-child {
+.trip-card:not(:first-child) {
+  margin-top: -12px;
+}
+
+.trip-card.expanded {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  z-index: 10;
+}
+
+.trip-card.expanded:first-child {
   margin-top: 0;
 }
 
-.summary-card.expanded {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.card-collapsed {
+.card-header {
   display: flex;
   align-items: center;
   padding: 16px 20px;
   gap: 12px;
 }
 
-.card-icon {
+.card-logo {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
 }
 
-.card-icon img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
-.card-info {
-  flex: 1;
-}
-
 .card-title {
+  flex: 1;
   font-size: 16px;
   font-weight: 600;
 }
@@ -206,27 +234,27 @@ body {
   opacity: 0.9;
 }
 
-.card-expanded {
+.card-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.3s ease, padding 0.3s ease;
   padding: 0 20px;
+  background: rgba(0,0,0,0.1);
 }
 
-.summary-card.expanded .card-expanded {
+.trip-card.expanded .card-content {
   max-height: 200px;
-  padding: 0 20px 16px;
+  padding: 16px 20px;
 }
 
 /* Flight Card */
 .flight-card {
-  background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
+  background: linear-gradient(135deg, #E31837 0%, #C41230 100%);
   z-index: 4;
 }
 
-.flight-details {
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+.airasia-logo {
+  background: transparent;
 }
 
 .flight-route {
@@ -235,95 +263,80 @@ body {
   justify-content: space-between;
 }
 
-.flight-point {
+.route-point {
   text-align: center;
 }
 
-.flight-code {
+.airport-code {
   display: block;
   font-size: 24px;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .flight-time {
+  display: block;
   font-size: 12px;
   opacity: 0.8;
+  margin-top: 2px;
 }
 
-.flight-line {
+.route-line {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 16px;
   position: relative;
 }
 
-.flight-line::before {
-  content: '';
+.route-line .line {
   position: absolute;
   top: 50%;
   left: 20%;
   right: 20%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255,255,255,0.4);
+  transform: translateY(-50%);
 }
 
-.plane-icon {
-  font-size: 20px;
+.route-line .plane {
+  font-size: 16px;
   position: relative;
   z-index: 1;
+  transform: rotate(90deg);
 }
 
-.flight-duration {
-  font-size: 12px;
+.route-line .duration {
+  font-size: 11px;
   opacity: 0.8;
   margin-top: 4px;
 }
 
 /* eSIM Card */
 .esim-card {
-  background: linear-gradient(135deg, #F9A825 0%, #F57F17 100%);
+  background: linear-gradient(135deg, #C4D600 0%, #A8B800 100%);
   z-index: 3;
 }
 
-.esim-details {
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.data-usage {
+.esim-usage {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.usage-circle {
-  width: 60px;
-  height: 60px;
+.usage-ring {
+  width: 56px;
+  height: 56px;
   position: relative;
 }
 
-.usage-circle svg {
+.usage-ring svg {
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg);
 }
 
-.circle-bg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.3);
-  stroke-width: 3;
-}
-
-.circle-progress {
-  fill: none;
-  stroke: white;
-  stroke-width: 3;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.5s ease;
-}
-
-.usage-text {
+.usage-percent {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -332,7 +345,7 @@ body {
   font-weight: 600;
 }
 
-.usage-info {
+.usage-details {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -344,58 +357,47 @@ body {
 }
 
 .usage-status {
-  font-size: 12px;
+  font-size: 13px;
   opacity: 0.9;
 }
 
-/* Travel Pass Card */
+/* Pass Card */
 .pass-card {
-  background: linear-gradient(135deg, #00A651 0%, #00873F 100%);
+  background: linear-gradient(135deg, #00A651 0%, #008C44 100%);
   z-index: 2;
 }
 
-.pass-details {
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+.pass-savings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .savings-amount {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 4px;
 }
 
-.pass-validity {
-  font-size: 12px;
+.savings-validity {
+  font-size: 13px;
   opacity: 0.8;
-  margin-bottom: 8px;
 }
 
-.browse-vouchers {
+.browse-link {
   color: white;
   font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
+  margin-top: 8px;
+  display: inline-block;
 }
 
-.browse-vouchers:hover {
-  text-decoration: underline;
-}
-
-/* GrabPay Card */
+/* Pay Card */
 .pay-card {
-  background: linear-gradient(135deg, #006B5A 0%, #004D40 100%);
+  background: linear-gradient(135deg, #4FD1C5 0%, #38B2AC 100%);
   z-index: 1;
-}
-
-.pay-details {
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .pay-actions {
   display: flex;
-  justify-content: space-between;
   gap: 8px;
 }
 
@@ -404,9 +406,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   padding: 12px 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.15);
   border: none;
   border-radius: 12px;
   color: white;
@@ -415,60 +417,60 @@ body {
 }
 
 .pay-action:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.25);
 }
 
 .pay-action svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
 .pay-action span {
   font-size: 11px;
+  font-weight: 500;
 }
 
-/* Pre-sync Feature Cards */
-.prep-section {
+/* Feature Cards */
+.feature-cards {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.prep-section.synced .feature-card:not(#advanceBookingCard) {
+.feature-cards.hidden {
   display: none;
 }
 
 .feature-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  padding: 20px;
   display: flex;
   gap: 16px;
-  transition: all 0.3s ease;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  transition: all 0.2s;
 }
 
 .feature-card:hover {
-  box-shadow: var(--shadow);
+  background: #EDEDED;
 }
 
 .feature-icon {
   width: 64px;
   height: 64px;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .feature-content {
   flex: 1;
+  min-width: 0;
 }
 
 .feature-content h3 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
+  color: var(--text-primary);
 }
 
 .feature-content p {
@@ -483,7 +485,7 @@ body {
   gap: 8px;
 }
 
-.btn-outline,
+.btn-secondary,
 .btn-primary {
   padding: 10px 20px;
   border-radius: 24px;
@@ -491,42 +493,60 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  border: none;
 }
 
-.btn-outline {
-  background: transparent;
-  border: 1.5px solid var(--grab-green);
-  color: var(--grab-green);
+.btn-secondary {
+  background: var(--white);
+  color: var(--text-primary);
+  border: 1.5px solid #E0E0E0;
 }
 
-.btn-outline:hover {
-  background: rgba(0, 166, 81, 0.1);
+.btn-secondary:hover {
+  background: #FAFAFA;
+  border-color: #CCC;
 }
 
 .btn-primary {
-  background: var(--grab-dark-green);
-  border: none;
+  background: var(--grab-green);
   color: white;
 }
 
 .btn-primary:hover {
-  background: #003D30;
+  background: #009A45;
 }
 
-/* Other Essentials */
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* Advance Booking Section (Post-sync) */
+.advance-booking-section {
+  display: none;
+  margin-bottom: 24px;
+}
+
+.advance-booking-section.visible {
+  display: block;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+/* Essentials Section */
 .essentials-section {
   padding-top: 8px;
 }
 
-.essentials-section h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.essentials-subtitle {
+.section-subtitle {
   font-size: 14px;
   color: var(--text-secondary);
+  margin-top: -8px;
   margin-bottom: 16px;
 }
 
@@ -538,36 +558,53 @@ body {
 
 .essential-card {
   background: var(--bg-card);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .essential-card:hover {
-  box-shadow: var(--shadow);
+  background: #EDEDED;
   transform: translateY(-2px);
+}
+
+.essential-card:active {
+  transform: scale(0.98);
 }
 
 .essential-icon {
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.essential-icon.firsty svg {
+  border-radius: 10px;
+}
+
+.essential-icon.helloride {
+  width: auto;
 }
 
 .helloride-badge {
-  background: #FFEB3B;
-  color: #FF5722;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 10px;
+  display: inline-flex;
+  background: #2196F3;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 11px;
   font-weight: 700;
-  text-transform: uppercase;
+}
+
+.helloride-badge .hello {
+  background: #FFD93D;
+  color: #E65100;
+  padding: 6px 4px 6px 8px;
+}
+
+.helloride-badge .ride {
+  color: white;
+  padding: 6px 8px 6px 4px;
 }
 
 .essential-info {
@@ -579,6 +616,7 @@ body {
 .essential-name {
   font-size: 14px;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .essential-desc {
@@ -588,7 +626,7 @@ body {
 }
 
 /* Animations */
-@keyframes slideIn {
+@keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-20px);
@@ -599,35 +637,39 @@ body {
   }
 }
 
-@keyframes cardStack {
-  0% {
+@keyframes cardAppear {
+  from {
     opacity: 0;
-    transform: translateY(-40px) scale(0.95);
+    transform: translateY(-30px) scale(0.95);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
-.summary-card.animate-in {
-  animation: cardStack 0.4s ease forwards;
+.trip-card.animate {
+  animation: cardAppear 0.4s ease forwards;
 }
 
-.summary-card:nth-child(1).animate-in { animation-delay: 0s; }
-.summary-card:nth-child(2).animate-in { animation-delay: 0.1s; }
-.summary-card:nth-child(3).animate-in { animation-delay: 0.2s; }
-.summary-card:nth-child(4).animate-in { animation-delay: 0.3s; }
+.trip-card:nth-child(1).animate { animation-delay: 0s; }
+.trip-card:nth-child(2).animate { animation-delay: 0.08s; }
+.trip-card:nth-child(3).animate { animation-delay: 0.16s; }
+.trip-card:nth-child(4).animate { animation-delay: 0.24s; }
 
 /* Responsive */
-@media (max-width: 375px) {
+@media (max-width: 360px) {
   .title {
     font-size: 24px;
   }
   
   .feature-card {
     flex-direction: column;
-    align-items: flex-start;
+  }
+  
+  .feature-icon {
+    width: 56px;
+    height: 56px;
   }
   
   .pay-actions {
